@@ -1,0 +1,25 @@
+version: '3'
+services:
+  llama_api:
+    build:
+      context: ./API-python
+      dockerfile: Dockerfile
+    container_name: llama_api
+    ports:
+      - "8080:8080"
+    networks:
+      - llama_net
+    volumes:
+      - ./Llama-3-ELYZA-JP-8B-q4_k_m.gguf:/app/Llama-3-ELYZA-JP-8B-q4_k_m.gguf
+
+  nodered:
+    image: nodered/node-red
+    container_name: mynodered
+    ports:
+      - "1880:1880"
+    networks:
+      - llama_net
+
+networks:
+  llama_net:
+    driver: bridge
